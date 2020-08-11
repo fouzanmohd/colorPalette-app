@@ -6,23 +6,30 @@ import NavBar from "./NavBar";
 class Palette extends Component {
   constructor(props) {
     super(props);
-    this.state = { scale: 500 };
+    this.state = { scale: 500, format: "hex" };
   }
 
   sliderChange = (scale) => {
     this.setState({ scale });
   };
 
+  formatChange = (val) => {
+    this.setState({ format: val });
+  };
   render() {
-    const { scale } = this.state;
+    const { scale, format } = this.state;
     const { colors } = this.props.palette;
     const colorBox = colors[scale].map((color) => (
-      <ColorBox background={color.hex} name={color.name} />
+      <ColorBox background={color[format]} name={color.name} />
     ));
     return (
       <div className="Palette">
         {/* navbar goes here */}
-        <NavBar scale={scale} sliderChange={this.sliderChange} />
+        <NavBar
+          scale={scale}
+          sliderChange={this.sliderChange}
+          formatChange={this.formatChange}
+        />
         <div className="Palette-colors">{colorBox}</div>
         {/* Footer goes here */}
       </div>
